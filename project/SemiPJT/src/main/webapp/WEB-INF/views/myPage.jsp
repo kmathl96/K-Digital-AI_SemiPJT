@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="false" %>
 <html>
@@ -14,6 +16,10 @@
 		}
 		article {
 			border-radius: 50px;
+		}
+		img {
+			width: 100px;
+			height: 100px;
 		}
 	</style>
 </head>
@@ -56,78 +62,29 @@
 </nav>
 <section>
 	<h1 class="text-center fw-bold m-3">
-		Questions
+		My page
 	</h1>
-	<div class="m-3 pe-3 d-grid gap-2 d-md-flex justify-content-md-end">
-	  <a href="" class="btn btn-warning"><b>New</b></a>
-	</div>
+	<!-- <div class="m-3 pe-3 d-grid gap-2 d-md-flex justify-content-md-end">
+	  <a href="" class="btn btn-warning"><b>Create!</b></a>
+	</div> -->
 	<article class="p-5 m-3 bg-light border border-dark border-5">
-		<table class="table table-hover">
-		  <thead>
-		    <tr>
-		      <th scope="col">No</th>
-		      <th scope="col">Title</th>
-		      <th scope="col">Student</th>
-		      <th scope="col">Date</th>
-		    </tr>
-		  </thead>
-		  <tbody>
-		    <tr>
-		      <th scope="row">1</th>
-		      <td>Mark</td>
-		      <td>Otto</td>
-		      <td>@mdo</td>
-		    </tr>
-		    <tr>
-		      <th scope="row">2</th>
-		      <td>Jacob</td>
-		      <td>Thornton</td>
-		      <td>@fat</td>
-		    </tr>
-		    <tr>
-		      <th scope="row">3</th>
-		      <td colspan="2">Larry the Bird</td>
-		      <td>@twitter</td>
-		    </tr>
-		    <tr>
-		      <th scope="row">5</th>
-		      <td colspan="2">Larry the Bird</td>
-		      <td>@twitter</td>
-		    </tr>
-		    <tr>
-		      <th scope="row">5</th>
-		      <td colspan="2">Larry the Bird</td>
-		      <td>@twitter</td>
-		    </tr>
-		    <tr>
-		      <th scope="row">1</th>
-		      <td>Mark</td>
-		      <td>Otto</td>
-		      <td>@mdo</td>
-		    </tr>
-		    <tr>
-		      <th scope="row">2</th>
-		      <td>Jacob</td>
-		      <td>Thornton</td>
-		      <td>@fat</td>
-		    </tr>
-		    <tr>
-		      <th scope="row">3</th>
-		      <td colspan="2">Larry the Bird</td>
-		      <td>@twitter</td>
-		    </tr>
-		    <tr>
-		      <th scope="row">5</th>
-		      <td colspan="2">Larry the Bird</td>
-		      <td>@twitter</td>
-		    </tr>
-		    <tr>
-		      <th scope="row">5</th>
-		      <td colspan="2">Larry the Bird</td>
-		      <td>@twitter</td>
-		    </tr>
-		  </tbody>
-		</table>
+		<div>
+			<img src="" class="img-fluid float-start" alt="image">
+			<h3>name</h3>
+			<a>비밀번호 변경</a>
+			<a>회원 탈퇴</a>
+		</div>
+		<ul class="nav nav-tabs">
+		  <li class="nav-item">
+		    <a class="nav-link active" aria-current="page" href="#">내 질문</a>
+		  </li>
+		  <li class="nav-item">
+		    <a class="nav-link" href="#">내 댓글</a>
+		  </li>
+		  <li class="nav-item">
+		    <a class="nav-link" href="#">스크랩한 질문</a>
+		  </li>
+		</ul>
 	</article>
 </section>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
