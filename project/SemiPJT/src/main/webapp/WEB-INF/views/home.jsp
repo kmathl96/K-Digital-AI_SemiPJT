@@ -2,6 +2,7 @@
 <%@ page session="false" %>
 <html>
 <head>
+	<meta charset="UTF-8">
 	<title>Home</title>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 	<style>
@@ -54,10 +55,13 @@
   </div>
 </nav>
 <section>
-	<h1 class="text-center fw-bold m-5">
+	<h1 class="text-center fw-bold m-3">
 		Hello world!
 	</h1>
-	<article class="p-5 m-5 bg-light border border-dark border-5">
+	<div class="m-3 pe-3 d-grid gap-2 d-md-flex justify-content-md-end">
+	  <a href="" class="btn btn-warning"><b>New</b></a>
+	</div>
+	<article class="p-5 m-3 bg-light border border-dark border-5">
 		<table class="table table-hover">
 		  <thead>
 		    <tr>
