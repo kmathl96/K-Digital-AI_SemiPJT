@@ -19,7 +19,7 @@
 			margin: auto;
 		}
 		.card:hover {
-			background-color: #F0F0F0;
+			background-color: lightgray;
 			/* color: firebrick; */
 		}
 	</style>

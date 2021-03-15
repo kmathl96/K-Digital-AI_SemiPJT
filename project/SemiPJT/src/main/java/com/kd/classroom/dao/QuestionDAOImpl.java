@@ -15,7 +15,6 @@ public class QuestionDAOImpl implements QuestionDAO {
 	@Override
 	public void insertQuestion(Question que) throws Exception {
 		sqlSession.insert("mapper.question.insertQuestion", que);
-		System.out.println("성공");
 	}
 	
 	@Override
@@ -26,5 +25,10 @@ public class QuestionDAOImpl implements QuestionDAO {
 	@Override
 	public List<Question> queryQuestions() throws Exception {
 		return sqlSession.selectList("mapper.question.selectAllQuestionList");
+	}
+	
+	@Override
+	public int updateQuestionHits(int id) throws Exception {
+		return sqlSession.update("mapper.question.updateQuestionHits", id);
 	}
 }

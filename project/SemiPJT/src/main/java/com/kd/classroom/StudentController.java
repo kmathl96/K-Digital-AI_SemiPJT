@@ -54,6 +54,13 @@ public class StudentController {
 				stu.setProfile_img("");
 				try {
 					studentDao.insertUser(stu);
+					List<Question> ques = questionDao.queryQuestions();
+					for (Question question : ques) {
+						Student writer = studentDao.queryUser(question.getW_id());
+						question.setW_name(writer.getName());
+						question.setCreated_at(question.getCreated_at().substring(0,10));
+					}
+					modelAndView.addObject("questions", ques);
 					modelAndView.addObject("page","questionList");
 				} catch (Exception e2) {
 					e2.printStackTrace();
@@ -93,6 +100,11 @@ public class StudentController {
 				HttpSession session = request.getSession();
 				session.setAttribute("id", id);
 				List<Question> ques = questionDao.queryQuestions();
+				for (Question question : ques) {
+					Student writer = studentDao.queryUser(question.getW_id());
+					question.setW_name(writer.getName());
+					question.setCreated_at(question.getCreated_at().substring(0,10));
+				}
 				modelAndView.addObject("questions", ques);
 				modelAndView.addObject("page", "questionList");
 			} else {
@@ -109,12 +121,13 @@ public class StudentController {
 		modelAndView.setViewName("home");
 		return modelAndView;
 	}
-//	
-//	@RequestMapping(value="/logout", method=RequestMethod.GET)
-//	public String logout(HttpServletRequest request, Model model) {
-//		HttpSession session = request.getSession();
-//		session.removeAttribute("id");
-//		model.addAttribute("page", "login_form");
-//		return "template";
-//	}
+	
+	@RequestMapping(value="/logout", method=RequestMethod.GET)
+	public ModelAndView logout(HttpServletRequest request) {
+		ModelAndView modelAndView = new ModelAndView();
+		HttpSession session = request.getSession();
+		session.removeAttribute("id");
+		modelAndView.setViewName("first");
+		return modelAndView;
+	}
 }

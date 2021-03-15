@@ -1,7 +1,6 @@
 package com.kd.classroom;
 
-import java.text.DateFormat;
-import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import org.slf4j.Logger;
@@ -10,12 +9,27 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.kd.classroom.bean.Question;
+import com.kd.classroom.bean.Student;
+import com.kd.classroom.dao.QuestionDAO;
+import com.kd.classroom.dao.StudentDAO;
 
 /**
  * Handles requests for the application home page.
  */
 @Controller
 public class HomeController {
+	private StudentDAO studentDao;
+	private QuestionDAO questionDao;
+	
+	public void setStudentDao(StudentDAO studentDao) {
+		this.studentDao = studentDao;
+	}
+	public void setQuestionDao(QuestionDAO questionDao) {
+		this.questionDao = questionDao;
+	}
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
@@ -23,17 +37,22 @@ public class HomeController {
 	 * Simply selects the home view to render by returning its name.
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Locale locale, Model model) {
-		logger.info("Welcome home! The client locale is {}.", locale);
-		
-		Date date = new Date();
-		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
-		
-		String formattedDate = dateFormat.format(date);
-		
-		model.addAttribute("serverTime", formattedDate );
-		
+	public String first(Locale locale, Model model) {
 		return "first";
 	}
 	
+	@RequestMapping(value = "/home", method = RequestMethod.GET)
+	public ModelAndView home(Locale locale, Model model) throws Exception {
+		ModelAndView modelAndView = new ModelAndView();
+		List<Question> ques = questionDao.queryQuestions();
+		for (Question question : ques) {
+			Student writer = studentDao.queryUser(question.getW_id());
+			question.setW_name(writer.getName());
+			question.setCreated_at(question.getCreated_at().substring(0,10));
+		}
+		modelAndView.addObject("questions", ques);
+		modelAndView.addObject("page","questionList");
+		modelAndView.setViewName("home");
+		return modelAndView;
+	}
 }

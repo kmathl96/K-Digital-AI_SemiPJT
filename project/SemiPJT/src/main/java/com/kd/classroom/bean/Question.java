@@ -3,6 +3,7 @@ package com.kd.classroom.bean;
 public class Question {
 	private int id;
 	private String w_id;
+	private String w_name;
 	private String title;
 	private String content;
 	private String img;
@@ -10,6 +11,12 @@ public class Question {
 	private String created_at;
 	private static int num = 1;
 	
+	public String getW_name() {
+		return w_name;
+	}
+	public void setW_name(String w_name) {
+		this.w_name = w_name;
+	}
 	public static int getNum() {
 		return num;
 	}

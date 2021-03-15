@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 							"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="mapper.question">
-	<select id="selectQuestion" resultType="com.kd.classroom.bean.Question" parameterType="String">
+	<select id="selectQuestion" resultType="com.kd.classroom.bean.Question" parameterType="int">
 		<![CDATA[
 		select * from classroom_question
 		where
@@ -16,8 +16,15 @@
 	</select>
 	<insert id="insertQuestion" parameterType="com.kd.classroom.bean.Question">
 		<![CDATA[
-		insert into classroom_question(id,writer_id,title,content,img)
+		insert into classroom_question(id,w_id,title,content,img)
 		values(#{id},#{w_id},#{title},#{content},#{img})
 		]]>
 	</insert>
+	<update id="updateQuestionHits" parameterType="int">
+		<![CDATA[
+		update classroom_question
+		set hits = hits + 1
+		where id=#{id}
+		]]>
+	</update>
 </mapper>

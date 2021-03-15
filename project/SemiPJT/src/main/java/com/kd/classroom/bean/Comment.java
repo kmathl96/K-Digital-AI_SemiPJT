@@ -3,9 +3,23 @@ package com.kd.classroom.bean;
 public class Comment {
 	private int id;
 	private String w_id;
-	private String q_id;
+	private String w_name;
+	private int q_id;
 	private String content;
+	private static int num = 1;
 	
+	public String getW_name() {
+		return w_name;
+	}
+	public void setW_name(String w_name) {
+		this.w_name = w_name;
+	}
+	public static int getNum() {
+		return num;
+	}
+	public static void setNum(int num) {
+		Comment.num = num;
+	}
 	public int getId() {
 		return id;
 	}
@@ -18,10 +32,10 @@ public class Comment {
 	public void setW_id(String w_id) {
 		this.w_id = w_id;
 	}
-	public String getQ_id() {
+	public int getQ_id() {
 		return q_id;
 	}
-	public void setQ_id(String q_id) {
+	public void setQ_id(int q_id) {
 		this.q_id = q_id;
 	}
 	public String getContent() {
