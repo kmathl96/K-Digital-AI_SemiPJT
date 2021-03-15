@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+							"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.question">
+	<select id="selectQuestion" resultType="com.kd.classroom.bean.Question" parameterType="String">
+		<![CDATA[
+		select * from classroom_question
+		where
+		id=#{id}
+		]]>
+	</select>
+	<insert id="insertQuestion" parameterType="com.kd.classroom.bean.Question">
+		<![CDATA[
+		insert into classroom_question(id,writer_id,title,content,img)
+		values(#{id},#{w_id},#{title},#{content},#{img})
+		]]>
+	</insert>
+</mapper>
