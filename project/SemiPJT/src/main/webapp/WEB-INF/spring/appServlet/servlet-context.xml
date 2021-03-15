@@ -28,7 +28,7 @@
 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver" />
 
 	<beans:bean id="studentDao" class="com.kd.classroom.dao.StudentDAOImpl" p:sqlSession-ref="sqlSession"/>
-	<beans:bean id="studentController" class="com.kd.classroom.StudentController" p:studentDao-ref="studentDao"/>
+	<beans:bean id="studentController" class="com.kd.classroom.StudentController" p:studentDao-ref="studentDao" p:questionDao-ref="questionDao"/>
 
 	<beans:bean id="questionDao" class="com.kd.classroom.dao.QuestionDAOImpl" p:sqlSession-ref="sqlSession"/>
 	<beans:bean id="questionController" class="com.kd.classroom.QuestionController" p:questionDao-ref="questionDao"/>

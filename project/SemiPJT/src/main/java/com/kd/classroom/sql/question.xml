@@ -9,6 +9,11 @@
 		id=#{id}
 		]]>
 	</select>
+	<select id="selectAllQuestionList" resultType="com.kd.classroom.bean.Question">
+		<![CDATA[
+		select * from classroom_question
+		]]>
+	</select>
 	<insert id="insertQuestion" parameterType="com.kd.classroom.bean.Question">
 		<![CDATA[
 		insert into classroom_question(id,writer_id,title,content,img)

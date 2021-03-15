@@ -1,5 +1,7 @@
 package com.kd.classroom.dao;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 
 import com.kd.classroom.bean.Question;
@@ -19,5 +21,10 @@ public class QuestionDAOImpl implements QuestionDAO {
 	@Override
 	public Question queryQuestion(int id) throws Exception {
 		return sqlSession.selectOne("mapper.question.selectQuestion", id);
+	}
+	
+	@Override
+	public List<Question> queryQuestions() throws Exception {
+		return sqlSession.selectList("mapper.question.selectAllQuestionList");
 	}
 }

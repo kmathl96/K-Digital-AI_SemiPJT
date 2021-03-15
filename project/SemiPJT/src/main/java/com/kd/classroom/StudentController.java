@@ -1,6 +1,7 @@
 package com.kd.classroom;
 
 import java.io.PrintWriter;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,15 +13,21 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kd.classroom.bean.Question;
 import com.kd.classroom.bean.Student;
+import com.kd.classroom.dao.QuestionDAO;
 import com.kd.classroom.dao.StudentDAO;
 
 @Controller
 public class StudentController {
 	private StudentDAO studentDao;
+	private QuestionDAO questionDao;
 	
 	public void setStudentDao(StudentDAO studentDao) {
 		this.studentDao = studentDao;
+	}
+	public void setQuestionDao(QuestionDAO questionDao) {
+		this.questionDao = questionDao;
 	}
 
 //	@RequestMapping(value="/join", method=RequestMethod.GET)
@@ -85,6 +92,8 @@ public class StudentController {
 			if (stu!=null && stu.getPassword().equals(password)) {
 				HttpSession session = request.getSession();
 				session.setAttribute("id", id);
+				List<Question> ques = questionDao.queryQuestions();
+				modelAndView.addObject("questions", ques);
 				modelAndView.addObject("page", "questionList");
 			} else {
 				PrintWriter out = response.getWriter();
