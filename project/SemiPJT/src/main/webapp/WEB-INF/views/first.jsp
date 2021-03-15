@@ -86,15 +86,15 @@
 	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 	      </div>
 	      <div class="modal-body">
-	        <form>
+	        <form action="./login" method="post">
 			  <div class="mb-3">
 			    <label for="loginInputEmail" class="form-label">Email address</label>
-			    <input type="email" class="form-control" id="loginInputEmail" aria-describedby="emailHelp">
+			    <input type="email" name="id" class="form-control" id="loginInputEmail" aria-describedby="emailHelp">
 			    <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
 			  </div>
 			  <div class="mb-3">
 			    <label for="loginInputPassword" class="form-label">Password</label>
-			    <input type="password" class="form-control" id="loginInputPassword">
+			    <input type="password" name="password" class="form-control" id="loginInputPassword">
 			  </div>
 			  <button type="submit" class="btn btn-primary">Submit</button>
 			</form>
