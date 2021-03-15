@@ -1,4 +1,4 @@
-package com.kd.semipjt;
+package com.kd.classroom;
 
 import java.text.DateFormat;
 import java.util.Date;
@@ -33,7 +33,7 @@ public class HomeController {
 		
 		model.addAttribute("serverTime", formattedDate );
 		
-		return "myPage";
+		return "first";
 	}
 	
 }

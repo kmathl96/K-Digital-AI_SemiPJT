@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.kd.classroom.bean.Question;
 import com.kd.classroom.dao.QuestionDAO;
@@ -25,9 +26,9 @@ public class QuestionController {
 	}
 	
 	@RequestMapping(value="/createQuestion", method=RequestMethod.POST)
-	public String createQuestion(HttpServletRequest request) throws Exception {
+	public ModelAndView createQuestion(HttpServletRequest request) throws Exception {
 		request.setCharacterEncoding("utf-8");
-//		ModelAndView modelAndView = new ModelAndView();
+		ModelAndView modelAndView = new ModelAndView();
 		Question que = null;
 		try {
 			int new_id = Question.getNum();
@@ -40,17 +41,20 @@ public class QuestionController {
 			try {
 				questionDao.insertQuestion(que);
 				Question.setNum(new_id+1);
+				modelAndView.addObject("page","questionList");
 			} catch (Exception e2) {
 				e2.printStackTrace();
+				modelAndView.addObject("err","회원가입 오류");
+				modelAndView.addObject("page","err");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-//			modelAndView.addObject("err","회원가입 오류");
-//			modelAndView.addObject("page","err");
+			modelAndView.addObject("err","회원가입 오류");
+			modelAndView.addObject("page","err");
 		}
 		// 결과와 페이지를 한번에 넣어서 반환
-//		modelAndView.setViewName("template");
-//		return modelAndView;
-		return "home";
+		modelAndView.setViewName("home");
+		return modelAndView;
+//		return "home";
 	}
 }
