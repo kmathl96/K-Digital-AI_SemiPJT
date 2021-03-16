@@ -20,4 +20,9 @@
 		values(#{id},#{w_id},#{q_id},#{content})
 		]]>
 	</insert>
+	<select id="selectMaxId" resultType="int">
+		<![CDATA[
+		select max(id) from classroom_answer
+		]]>
+	</select>
 </mapper>

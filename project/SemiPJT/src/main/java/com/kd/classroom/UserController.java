@@ -91,7 +91,6 @@ public class UserController {
 //	}
 //	
 	@RequestMapping(value="/login", method=RequestMethod.POST)
-	@ResponseBody
 	public ModelAndView login(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html; charset=UTF-8");
@@ -140,6 +139,7 @@ public class UserController {
 		ModelAndView modelAndView = new ModelAndView();
 		HttpSession session = request.getSession();
 		String user_id = (String) session.getAttribute("id");
+		System.out.println(user_id);
 		try {
 			User request_user = userDao.queryStudent(user_id);
 			modelAndView.addObject("request_user", request_user);
@@ -152,28 +152,52 @@ public class UserController {
 		modelAndView.setViewName("home");
 		return modelAndView;
 	}
-
-	@RequestMapping(value="/changeProfileImage", method=RequestMethod.POST)
-	public ModelAndView changeProfileImage(HttpServletRequest request, @RequestParam("uploadFile") MultipartFile file) throws IllegalStateException, IOException {
-		System.out.println("넘어오기 한다");
+	
+	@RequestMapping(value="/changeProfile", method=RequestMethod.GET)
+	public ModelAndView changeProfile(HttpServletRequest request) throws IllegalStateException, IOException {
 		ModelAndView modelAndView = new ModelAndView();
-		String PROFILE_IMAGE_PATH = request.getSession().getServletContext().getRealPath("resource/profileUpload/");
 		HttpSession session = request.getSession();
 		String user_id = (String) session.getAttribute("id");
 		try {
 			User request_user = userDao.queryUser(user_id);
-			if (!file.getOriginalFilename().isEmpty()) {
-				file.transferTo(new File(PROFILE_IMAGE_PATH, request_user.getId()));
-			}
-			request_user.setProfile_img(PROFILE_IMAGE_PATH+"/"+request_user.getId());
-			userDao.changeProfileImg(request_user);
+			modelAndView.addObject("request_user", request_user);
+			modelAndView.addObject("page","changeProfile");
 		} catch (Exception e) {
 			e.printStackTrace();
 			modelAndView.addObject("err","실패");
 			modelAndView.addObject("page","err");
 		}
+		modelAndView.setViewName("home");
+		return modelAndView;
+	}
+	
+	@RequestMapping(value="/changeProfile", method=RequestMethod.POST)
+	public ModelAndView changeProfile(HttpServletRequest request, @RequestParam("uploadFile") MultipartFile file) throws IllegalStateException, IOException {
+		System.out.println("넘어오기 한다");
+		ModelAndView modelAndView = new ModelAndView();
+		String PROFILE_IMAGE_PATH = request.getSession().getServletContext().getRealPath("resource/profileUpload/");
+		HttpSession session = request.getSession();
+		String user_id = (String) session.getAttribute("id");
+		System.out.println(user_id);
+		try {
+			User request_user = userDao.queryUser(user_id);
+			if (!file.getOriginalFilename().isEmpty()) {
+				file.transferTo(new File(PROFILE_IMAGE_PATH, request_user.getId()));
+				System.out.println("empty");
+			}
+			request_user.setProfile_img(PROFILE_IMAGE_PATH+"/"+request_user.getId());
+			System.out.println(request_user);
+			userDao.changeProfileImg(request_user);
+			modelAndView.addObject("request_user", request_user);
+		} catch (Exception e) {
+			e.printStackTrace();
+			modelAndView.addObject("err","실패");
+			modelAndView.addObject("page","err");
+		}
+		System.out.println("오잉");
 		modelAndView.addObject("page","myPage");
 		modelAndView.setViewName("home");
 		return modelAndView;
 	}
+	
 }

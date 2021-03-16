@@ -59,9 +59,8 @@ public class QuestionController {
 		String user_name = userDao.queryStudent(user_id).getName();
 		Question que = null;
 		try {
-			int new_id = questionDao.findNewId();
 			que = new Question();
-			que.setId(new_id);
+			que.setId(questionDao.findNewId());
 			que.setW_id(user_id);
 			que.setW_name(user_name);
 			que.setTitle(request.getParameter("title"));
@@ -69,7 +68,6 @@ public class QuestionController {
 			que.setImg("");
 			try {
 				questionDao.insertQuestion(que);
-				Question.setNum(new_id+1);
 				List<Question> ques = questionDao.queryQuestions();
 				for (Question question : ques) {
 					User writer = userDao.queryStudent(question.getW_id());

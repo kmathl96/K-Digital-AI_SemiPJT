@@ -57,9 +57,8 @@ public class AnswerController {
 		User teacher = userDao.queryTeacher(t_id);
 		Answer ans = null;
 		try {
-			int new_id = Answer.getNum();
 			ans = new Answer();
-			ans.setId(new_id);
+			ans.setId(answerDao.findNewId());
 			ans.setW_id(t_id);
 			ans.setQ_id(q_id);
 			ans.setW_name(teacher.getName());
@@ -67,7 +66,6 @@ public class AnswerController {
 			ans.setImg("");
 			try {
 				answerDao.insertAnswer(ans);
-				Answer.setNum(new_id+1);
 				Question que = questionDao.queryQuestion(q_id);
 				User questionWriter = userDao.queryStudent(que.getW_id());
 				que.setW_name(questionWriter.getName());

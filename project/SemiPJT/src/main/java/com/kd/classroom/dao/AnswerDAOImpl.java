@@ -26,4 +26,14 @@ public class AnswerDAOImpl implements AnswerDAO {
 	public List<Answer> queryAnswers() throws Exception {
 		return sqlSession.selectList("mapper.answer.selectAllAnswerList");
 	}
+	
+	@Override
+	public int findNewId() throws Exception {
+		try {
+			int max = sqlSession.selectOne("mapper.answer.selectMaxId");
+			return max+1;
+		} catch (Exception e) {
+			return 1;
+		}
+	}
 }

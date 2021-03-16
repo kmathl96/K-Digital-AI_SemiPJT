@@ -8,4 +8,5 @@ public interface CommentDAO {
 	public void insertComment(Comment com) throws Exception;
 	public List<Comment> queryComments() throws Exception;
 	public List<Comment> queryComments(int id) throws Exception;
+	public int findNewId() throws Exception;
 }

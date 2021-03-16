@@ -58,16 +58,14 @@ public class CommentController {
 		que.setW_name(questionWriter.getName());
 		Comment com = null;
 		try {
-			int new_id = Comment.getNum();
 			com = new Comment();
-			com.setId(new_id);
+			com.setId(commentDao.findNewId());
 			com.setW_id(user_id);
 			com.setW_name(request_user.getName());
 			com.setQ_id(q_id);
 			com.setContent(request.getParameter("content"));
 			try {
 				commentDao.insertComment(com);
-				Comment.setNum(new_id+1);
 				List<Comment> coms = commentDao.queryComments(q_id);
 				for (Comment comment : coms) {
 					User writer = userDao.queryUser(comment.getW_id());

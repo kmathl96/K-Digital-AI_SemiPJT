@@ -8,4 +8,5 @@ public interface AnswerDAO {
 	public void insertAnswer(Answer ans) throws Exception;
 	public Answer queryAnswer(int id) throws Exception;
 	public List<Answer> queryAnswers() throws Exception;
+	public int findNewId() throws Exception;
 }
