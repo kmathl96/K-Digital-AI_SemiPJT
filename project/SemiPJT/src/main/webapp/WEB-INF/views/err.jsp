@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1><i class="fas fa-exclamation-triangle"></i> SORRY <i class="fas fa-exclamation-triangle"></i></h1>
+	<h1><i class="fas fa-exclamation-triangle"></i> <b>SORRY</b> <i class="fas fa-exclamation-triangle"></i></h1>
 	<p>${err }</p>
 </body>
 </html>

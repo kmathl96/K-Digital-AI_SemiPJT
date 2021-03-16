@@ -46,7 +46,7 @@
           </ul>
         </li> -->
         <li class="nav-item">
-          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">My Page</a>
+          <a class="nav-link" href="/semipjt/mypage" tabindex="-1" aria-disabled="true">My Page</a>
         </li>
       </ul>
       <form class="d-flex mb-0">

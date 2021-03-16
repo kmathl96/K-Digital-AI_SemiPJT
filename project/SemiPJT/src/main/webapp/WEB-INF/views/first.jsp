@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="false" %>
 <html>
@@ -111,7 +113,7 @@
 	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 	      </div>
 	      <div class="modal-body">
-	        <form action="./join" method="post">
+	        <form action="./signup" method="post">
 			  <div class="mb-3">
 			    <label for="signupInputEmail" class="form-label">Email address</label>
 			    <input type="email" name="id" class="form-control" id="signupInputEmail" aria-describedby="emailHelp">
