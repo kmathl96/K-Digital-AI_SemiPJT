@@ -9,4 +9,5 @@ public interface QuestionDAO {
 	public Question queryQuestion(int id) throws Exception;
 	public List<Question> queryQuestions() throws Exception;
 	public int updateQuestionHits(int id) throws Exception;
+	public int findNewId() throws Exception;
 }

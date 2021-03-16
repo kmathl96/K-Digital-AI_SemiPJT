@@ -27,4 +27,9 @@
 		where id=#{id}
 		]]>
 	</update>
+	<select id="selectMaxId" resultType="int">
+		<![CDATA[
+		select max(id) from classroom_question
+		]]>
+	</select>
 </mapper>

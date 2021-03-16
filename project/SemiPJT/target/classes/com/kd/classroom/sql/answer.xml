@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+							"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.answer">
+	<select id="selectAnswer" resultType="com.kd.classroom.bean.Answer" parameterType="int">
+		<![CDATA[
+		select * from classroom_answer
+		where
+		id=#{id}
+		]]>
+	</select>
+	<select id="selectAllAnswerList" resultType="com.kd.classroom.bean.Answer">
+		<![CDATA[
+		select * from classroom_answer
+		]]>
+	</select>
+	<insert id="insertAnswer" parameterType="com.kd.classroom.bean.Answer">
+		<![CDATA[
+		insert into classroom_answer(id,w_id,q_id,content)
+		values(#{id},#{w_id},#{q_id},#{content})
+		]]>
+	</insert>
+</mapper>

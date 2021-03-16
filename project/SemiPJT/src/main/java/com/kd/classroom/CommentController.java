@@ -11,21 +11,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kd.classroom.bean.Answer;
 import com.kd.classroom.bean.Comment;
 import com.kd.classroom.bean.Question;
-import com.kd.classroom.bean.Student;
+import com.kd.classroom.bean.User;
+import com.kd.classroom.dao.AnswerDAO;
 import com.kd.classroom.dao.CommentDAO;
 import com.kd.classroom.dao.QuestionDAO;
-import com.kd.classroom.dao.StudentDAO;
+import com.kd.classroom.dao.UserDAO;
 
 @Controller
 public class CommentController {
-	private StudentDAO studentDao;
+	private UserDAO userDao;
 	private QuestionDAO questionDao;
 	private CommentDAO commentDao;
+	private AnswerDAO answerDao;
 	
-	public void setStudentDao(StudentDAO studentDao) {
-		this.studentDao = studentDao;
+	public void setUserDao(UserDAO userDao) {
+		this.userDao = userDao;
 	}
 	public void setQuestionDao(QuestionDAO questionDao) {
 		this.questionDao = questionDao;
@@ -33,8 +36,11 @@ public class CommentController {
 	public void setCommentDao(CommentDAO commentDao) {
 		this.commentDao = commentDao;
 	}
+	public void setAnswerDao(AnswerDAO answerDao) {
+		this.answerDao = answerDao;
+	}
 
-//	@RequestMapping(value="/createQuestion", method=RequestMethod.GET)
+	//	@RequestMapping(value="/createQuestion", method=RequestMethod.GET)
 //	public String questionForm(Model model) {
 ////		model.addAttribute("page", "join_form");
 //		return "questionForm";
@@ -45,11 +51,11 @@ public class CommentController {
 		request.setCharacterEncoding("utf-8");
 		ModelAndView modelAndView = new ModelAndView();
 		HttpSession session = request.getSession();
-		Question que = questionDao.queryQuestion(q_id);
-		Student questionWriter = studentDao.queryUser(que.getW_id());
-		que.setW_name(questionWriter.getName());
 		String user_id = (String) session.getAttribute("id");
-		Student request_user = studentDao.queryUser(user_id);
+		User request_user = userDao.queryUser(user_id);
+		Question que = questionDao.queryQuestion(q_id);
+		User questionWriter = userDao.queryStudent(que.getW_id());
+		que.setW_name(questionWriter.getName());
 		Comment com = null;
 		try {
 			int new_id = Comment.getNum();
@@ -60,15 +66,19 @@ public class CommentController {
 			com.setQ_id(q_id);
 			com.setContent(request.getParameter("content"));
 			try {
-				System.out.println(com);
 				commentDao.insertComment(com);
 				Comment.setNum(new_id+1);
 				List<Comment> coms = commentDao.queryComments(q_id);
 				for (Comment comment : coms) {
-					Student writer = studentDao.queryUser(comment.getW_id());
+					User writer = userDao.queryUser(comment.getW_id());
 					comment.setW_name(writer.getName());
 				}
+				Answer ans = answerDao.queryAnswer(q_id);
+				if (ans!=null) {
+					ans.setW_name(userDao.queryTeacher(ans.getW_id()).getName());
+				}
 				modelAndView.addObject("request_user", request_user);
+				modelAndView.addObject("ans", ans);
 				modelAndView.addObject("que", que);
 				modelAndView.addObject("comments", coms);
 				modelAndView.addObject("page","questionDetail");

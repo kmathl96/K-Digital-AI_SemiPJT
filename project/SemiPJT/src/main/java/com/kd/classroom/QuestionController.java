@@ -1,5 +1,6 @@
 package com.kd.classroom;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,27 +13,33 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kd.classroom.bean.Answer;
 import com.kd.classroom.bean.Comment;
 import com.kd.classroom.bean.Question;
-import com.kd.classroom.bean.Student;
+import com.kd.classroom.bean.User;
+import com.kd.classroom.dao.AnswerDAO;
 import com.kd.classroom.dao.CommentDAO;
 import com.kd.classroom.dao.QuestionDAO;
-import com.kd.classroom.dao.StudentDAO;
+import com.kd.classroom.dao.UserDAO;
 
 @Controller
 public class QuestionController {
-	private StudentDAO studentDao;
+	private UserDAO userDao;
 	private QuestionDAO questionDao;
 	private CommentDAO commentDao;
+	private AnswerDAO answerDao;
 	
-	public void setStudentDao(StudentDAO studentDao) {
-		this.studentDao = studentDao;
+	public void setUserDao(UserDAO userDao) {
+		this.userDao = userDao;
 	}
 	public void setQuestionDao(QuestionDAO questionDao) {
 		this.questionDao = questionDao;
 	}
 	public void setCommentDao(CommentDAO commentDao) {
 		this.commentDao = commentDao;
+	}
+	public void setAnswerDao(AnswerDAO answerDao) {
+		this.answerDao = answerDao;
 	}
 
 	@RequestMapping(value="/createQuestion", method=RequestMethod.GET)
@@ -49,10 +56,10 @@ public class QuestionController {
 		ModelAndView modelAndView = new ModelAndView();
 		HttpSession session = request.getSession();
 		String user_id = (String) session.getAttribute("id");
-		String user_name = studentDao.queryUser(user_id).getName();
+		String user_name = userDao.queryStudent(user_id).getName();
 		Question que = null;
 		try {
-			int new_id = Question.getNum();
+			int new_id = questionDao.findNewId();
 			que = new Question();
 			que.setId(new_id);
 			que.setW_id(user_id);
@@ -65,7 +72,7 @@ public class QuestionController {
 				Question.setNum(new_id+1);
 				List<Question> ques = questionDao.queryQuestions();
 				for (Question question : ques) {
-					Student writer = studentDao.queryUser(question.getW_id());
+					User writer = userDao.queryStudent(question.getW_id());
 					question.setW_name(writer.getName());
 					question.setCreated_at(question.getCreated_at().substring(0,10));
 				}
@@ -81,10 +88,8 @@ public class QuestionController {
 			modelAndView.addObject("err","질문 생성 오류");
 			modelAndView.addObject("page","err");
 		}
-		// 결과와 페이지를 한번에 넣어서 반환
 		modelAndView.setViewName("home");
 		return modelAndView;
-//		return "home";
 	}
 	
 	@RequestMapping(value="/questionDetail/{q_id}", method=RequestMethod.GET)
@@ -93,16 +98,25 @@ public class QuestionController {
 		try {
 			Question que = questionDao.queryQuestion(q_id);
 			questionDao.updateQuestionHits(que.getId());
-			Student writer = studentDao.queryUser(que.getW_id());
+			User writer = userDao.queryStudent(que.getW_id());
 			que.setW_name(writer.getName());
-			List<Comment> coms = commentDao.queryComments(q_id);
-			for (Comment comment : coms) {
-				comment.setW_name(studentDao.queryUser(comment.getW_id()).getName());
+			List<Comment> coms = new ArrayList<Comment>();
+			try {
+				coms = commentDao.queryComments(q_id);
+				for (Comment comment : coms) {
+					comment.setW_name(userDao.queryStudent(comment.getW_id()).getName());
+				}
+			} catch (Exception e) {
 			}
 			HttpSession session = request.getSession();
 			String user_id = (String) session.getAttribute("id");
-			Student request_user = studentDao.queryUser(user_id);
+			User request_user = userDao.queryUser(user_id);
+			Answer ans = answerDao.queryAnswer(q_id);
+			if (ans!=null) {
+				ans.setW_name(userDao.queryUser(ans.getW_id()).getName());
+			}
 			modelAndView.addObject("request_user", request_user);
+			modelAndView.addObject("ans", ans);
 			modelAndView.addObject("comments", coms);
 			modelAndView.addObject("que", que);
 			modelAndView.addObject("page","questionDetail");
@@ -111,7 +125,6 @@ public class QuestionController {
 			modelAndView.addObject("err","질문 상세 조회 오류");
 			modelAndView.addObject("page","err");
 		}
-//		model.addAttribute("page", "join_form");
 		modelAndView.setViewName("home");
 		return modelAndView;
 	}

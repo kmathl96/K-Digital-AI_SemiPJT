@@ -31,4 +31,14 @@ public class QuestionDAOImpl implements QuestionDAO {
 	public int updateQuestionHits(int id) throws Exception {
 		return sqlSession.update("mapper.question.updateQuestionHits", id);
 	}
+	
+	@Override
+	public int findNewId() throws Exception {
+		try {
+			int max = sqlSession.selectOne("mapper.question.selectMaxId");
+			return max+1;
+		} catch (Exception e) {
+			return 1;
+		}
+	}
 }

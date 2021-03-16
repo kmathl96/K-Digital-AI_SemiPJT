@@ -12,20 +12,20 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kd.classroom.bean.Question;
-import com.kd.classroom.bean.Student;
+import com.kd.classroom.bean.User;
 import com.kd.classroom.dao.QuestionDAO;
-import com.kd.classroom.dao.StudentDAO;
+import com.kd.classroom.dao.UserDAO;
 
 /**
  * Handles requests for the application home page.
  */
 @Controller
 public class HomeController {
-	private StudentDAO studentDao;
+	private UserDAO userDao;
 	private QuestionDAO questionDao;
 	
-	public void setStudentDao(StudentDAO studentDao) {
-		this.studentDao = studentDao;
+	public void setUserDao(UserDAO userDao) {
+		this.userDao = userDao;
 	}
 	public void setQuestionDao(QuestionDAO questionDao) {
 		this.questionDao = questionDao;
@@ -46,7 +46,7 @@ public class HomeController {
 		ModelAndView modelAndView = new ModelAndView();
 		List<Question> ques = questionDao.queryQuestions();
 		for (Question question : ques) {
-			Student writer = studentDao.queryUser(question.getW_id());
+			User writer = userDao.queryStudent(question.getW_id());
 			question.setW_name(writer.getName());
 			question.setCreated_at(question.getCreated_at().substring(0,10));
 		}

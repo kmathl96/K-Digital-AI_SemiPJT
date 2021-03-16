@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+							"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.user">
+	<select id="selectUser" resultType="com.kd.classroom.bean.User" parameterType="String">
+		<![CDATA[
+		select * from classroom_user
+		where
+		id=#{id}
+		]]>
+	</select>
+	<select id="selectStudent" resultType="com.kd.classroom.bean.User" parameterType="String">
+		<![CDATA[
+		select * from classroom_user
+		where
+		id=#{id} and account_type='student'
+		]]>
+	</select>
+	<insert id="insertStudent" parameterType="com.kd.classroom.bean.User">
+		<![CDATA[
+		insert into classroom_user(id,name,password,profile_img,account_type)
+		values(#{id},#{name},#{password},#{profile_img},'student')
+		]]>
+	</insert>
+	<select id="selectTeacher" resultType="com.kd.classroom.bean.User" parameterType="String">
+		<![CDATA[
+		select * from classroom_user
+		where
+		id=#{id} and account_type='teacher'
+		]]>
+	</select>
+	<insert id="insertTeacher" parameterType="com.kd.classroom.bean.User">
+		<![CDATA[
+		insert into classroom_user(id,name,password,profile_img,account_type)
+		values(#{id},#{name},#{password},#{profile_img},'teacher')
+		]]>
+	</insert>
+	<update id="updateProfileImage" parameterType="com.kd.classroom.bean.User">
+		<![CDATA[
+		update classroom_user
+		set profile_img = #{profile_img}
+		where id=#{id}
+		]]>
+	</update>
+</mapper>

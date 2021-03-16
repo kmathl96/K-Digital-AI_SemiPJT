@@ -1,11 +1,18 @@
 package com.kd.classroom.bean;
 
-public class Teacher {
+public class User {
 	private String id;
 	private String name;
 	private String password;
 	private String profile_img;
+	private String account_type;
 	
+	public String getAccount_type() {
+		return account_type;
+	}
+	public void setAccount_type(String account_type) {
+		this.account_type = account_type;
+	}
 	public String getId() {
 		return id;
 	}
