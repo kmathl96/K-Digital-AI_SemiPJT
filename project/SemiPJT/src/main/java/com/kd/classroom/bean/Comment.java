@@ -4,21 +4,21 @@ public class Comment {
 	private int id;
 	private String w_id;
 	private String w_name;
+	private String w_img;
 	private int q_id;
 	private String content;
-	private static int num = 1;
 	
+	public String getW_img() {
+		return w_img;
+	}
+	public void setW_img(String w_img) {
+		this.w_img = w_img;
+	}
 	public String getW_name() {
 		return w_name;
 	}
 	public void setW_name(String w_name) {
 		this.w_name = w_name;
-	}
-	public static int getNum() {
-		return num;
-	}
-	public static void setNum(int num) {
-		Comment.num = num;
 	}
 	public int getId() {
 		return id;

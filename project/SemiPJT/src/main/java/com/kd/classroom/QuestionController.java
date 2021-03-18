@@ -16,10 +16,12 @@ import org.springframework.web.servlet.ModelAndView;
 import com.kd.classroom.bean.Answer;
 import com.kd.classroom.bean.Comment;
 import com.kd.classroom.bean.Question;
+import com.kd.classroom.bean.Scrap;
 import com.kd.classroom.bean.User;
 import com.kd.classroom.dao.AnswerDAO;
 import com.kd.classroom.dao.CommentDAO;
 import com.kd.classroom.dao.QuestionDAO;
+import com.kd.classroom.dao.ScrapDAO;
 import com.kd.classroom.dao.UserDAO;
 
 @Controller
@@ -28,6 +30,7 @@ public class QuestionController {
 	private QuestionDAO questionDao;
 	private CommentDAO commentDao;
 	private AnswerDAO answerDao;
+	private ScrapDAO scrapDao;
 	
 	public void setUserDao(UserDAO userDao) {
 		this.userDao = userDao;
@@ -40,6 +43,9 @@ public class QuestionController {
 	}
 	public void setAnswerDao(AnswerDAO answerDao) {
 		this.answerDao = answerDao;
+	}
+	public void setScrapDao(ScrapDAO scrapDao) {
+		this.scrapDao = scrapDao;
 	}
 
 	@RequestMapping(value="/createQuestion", method=RequestMethod.GET)
@@ -90,21 +96,24 @@ public class QuestionController {
 		return modelAndView;
 	}
 	
-	@RequestMapping(value="/questionDetail/{q_id}", method=RequestMethod.GET)
-	public ModelAndView questionDetail(HttpServletRequest request, @PathVariable int q_id) {
+	@RequestMapping(value="/questionDetail/{id}", method=RequestMethod.GET)
+	public ModelAndView questionDetail(HttpServletRequest request, @PathVariable String id) {
 		ModelAndView modelAndView = new ModelAndView();
+		int q_id = Integer.parseInt(id);
 		try {
 			Question que = questionDao.queryQuestion(q_id);
 			questionDao.updateQuestionHits(que.getId());
 			User writer = userDao.queryStudent(que.getW_id());
-			que.setW_name(writer.getName());
-			List<Comment> coms = new ArrayList<Comment>();
+			List<Comment> coms = new ArrayList<>();
 			try {
 				coms = commentDao.queryComments(q_id);
 				for (Comment comment : coms) {
-					comment.setW_name(userDao.queryStudent(comment.getW_id()).getName());
+					User c_writer = userDao.queryStudent(comment.getW_id());
+					comment.setW_name(c_writer.getName());
+					comment.setW_img(c_writer.getProfile_img());
 				}
 			} catch (Exception e) {
+				e.printStackTrace();
 			}
 			HttpSession session = request.getSession();
 			String user_id = (String) session.getAttribute("id");
@@ -113,10 +122,11 @@ public class QuestionController {
 			if (ans!=null) {
 				ans.setW_name(userDao.queryUser(ans.getW_id()).getName());
 			}
+			modelAndView.addObject("writer", writer);
 			modelAndView.addObject("request_user", request_user);
 			modelAndView.addObject("ans", ans);
-			modelAndView.addObject("comments", coms);
 			modelAndView.addObject("que", que);
+			modelAndView.addObject("comments", coms);
 			modelAndView.addObject("page","questionDetail");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -125,5 +135,47 @@ public class QuestionController {
 		}
 		modelAndView.setViewName("home");
 		return modelAndView;
+	}
+	@RequestMapping(value="/questionDetail/{id}/scrapQuestion", method=RequestMethod.GET)
+	public String scrapQuestion(HttpServletRequest request, Model model, @PathVariable String id) throws Exception {
+		HttpSession session = request.getSession();
+		String user_id = (String) session.getAttribute("id");
+		User request_user = userDao.queryUser(user_id);
+		int q_id = Integer.parseInt(id);
+		Scrap scr = new Scrap();
+		scr.setU_id(user_id);
+		scr.setQ_id(q_id);
+		if (scrapDao.queryScrap(scr) != null) {
+			// delete
+			scrapDao.deleteScrap(scr);
+		} else {
+			// insert
+			scrapDao.insertScrap(scr);
+		}
+		Answer ans = answerDao.queryAnswer(q_id);
+		if (ans!=null) {
+			ans.setW_name(userDao.queryUser(ans.getW_id()).getName());
+		}
+		Question que = questionDao.queryQuestion(q_id);
+		questionDao.updateQuestionHits(que.getId());
+		User writer = userDao.queryStudent(que.getW_id());
+		List<Comment> coms = new ArrayList<>();
+		try {
+			coms = commentDao.queryComments(q_id);
+			for (Comment comment : coms) {
+				User c_writer = userDao.queryStudent(comment.getW_id());
+				comment.setW_name(c_writer.getName());
+				comment.setW_img(c_writer.getProfile_img());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		model.addAttribute("writer", writer);
+		model.addAttribute("request_user", request_user);
+		model.addAttribute("ans", ans);
+		model.addAttribute("que", que);
+		model.addAttribute("comments", coms);
+		model.addAttribute("page", "questionDetail");
+		return "home";
 	}
 }

@@ -54,8 +54,7 @@ public class CommentController {
 		String user_id = (String) session.getAttribute("id");
 		User request_user = userDao.queryUser(user_id);
 		Question que = questionDao.queryQuestion(q_id);
-		User questionWriter = userDao.queryStudent(que.getW_id());
-		que.setW_name(questionWriter.getName());
+		User writer = userDao.queryStudent(que.getW_id());
 		Comment com = null;
 		try {
 			com = new Comment();
@@ -68,13 +67,15 @@ public class CommentController {
 				commentDao.insertComment(com);
 				List<Comment> coms = commentDao.queryComments(q_id);
 				for (Comment comment : coms) {
-					User writer = userDao.queryUser(comment.getW_id());
-					comment.setW_name(writer.getName());
+					User c_writer = userDao.queryStudent(comment.getW_id());
+					comment.setW_name(c_writer.getName());
+					comment.setW_img(c_writer.getProfile_img());
 				}
 				Answer ans = answerDao.queryAnswer(q_id);
 				if (ans!=null) {
 					ans.setW_name(userDao.queryTeacher(ans.getW_id()).getName());
 				}
+				modelAndView.addObject("writer", writer);
 				modelAndView.addObject("request_user", request_user);
 				modelAndView.addObject("ans", ans);
 				modelAndView.addObject("que", que);
