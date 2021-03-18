@@ -7,19 +7,12 @@ public class Answer {
 	private int q_id;
 	private String content;
 	private String img;
-	private static int num = 1;
 	
 	public String getW_name() {
 		return w_name;
 	}
 	public void setW_name(String w_name) {
 		this.w_name = w_name;
-	}
-	public static int getNum() {
-		return num;
-	}
-	public static void setNum(int num) {
-		Answer.num = num;
 	}
 	public int getId() {
 		return id;

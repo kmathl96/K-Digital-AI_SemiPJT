@@ -67,14 +67,15 @@ public class AnswerController {
 			try {
 				answerDao.insertAnswer(ans);
 				Question que = questionDao.queryQuestion(q_id);
-				User questionWriter = userDao.queryStudent(que.getW_id());
-				que.setW_name(questionWriter.getName());
+				User writer = userDao.queryStudent(que.getW_id());
 				List<Comment> coms = commentDao.queryComments(q_id);
 				for (Comment comment : coms) {
-					User writer = userDao.queryStudent(comment.getW_id());
-					comment.setW_name(writer.getName());
+					User c_writer = userDao.queryStudent(comment.getW_id());
+					comment.setW_name(c_writer.getName());
+					comment.setW_img(c_writer.getProfile_img());
 				}
 				modelAndView.addObject("ans", ans);
+				modelAndView.addObject("writer", writer);
 				modelAndView.addObject("request_user", teacher);
 				modelAndView.addObject("que", que);
 				modelAndView.addObject("comments", coms);
