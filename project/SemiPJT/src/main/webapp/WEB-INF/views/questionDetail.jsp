@@ -2,17 +2,22 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="false" %>
+	
+<article class="p-5 m-3 bg-light border border-dark border-5">
+	<div class="d-flex justify-content-between my-3">
+		<h5><img src="/semipjt/resources/profileUpload/${writer.profile_img }" class="comment_profileImg img-fluid float-start me-3 rounded-circle" alt="image"}><b>${writer.name }</b> 님의 질문</h5>
+		<p class="text-secondary text-end">${que.created_at }</p>
+	</div>
 	<h1 class="text-center fw-bold m-3">
 		${que.title }
 	</h1>
-	
-<article class="p-5 m-3 bg-light border border-dark border-5">
-	<div class="d-flex justify-content-between mb-3">
-		<h5><b>${que.w_name }</b> 님의 질문</h5>
-		<p class="text-secondary text-end">${que.created_at }</p>
-	</div>
-	<img src="" class="img-fluid" alt="image">
+	<img src="/semipjt/resources/questionUpload/exampleImg.jpg" class="img-fluid" alt="image">
 	<p>${que.content }</p>
+	<div class="d-flex justify-content-center mb-2">
+		<div class="btn btn-outline-dark p-4 p-3 position-relative">
+			<i class="fas fa-thumbtack fa-2x pb-3"></i><br><a href="./${que.id}/scrapQuestion" class="stretched-link text-decoration-none text-reset">Scrap!</a>
+		</div>
+	</div>
 	<c:if test="${request_user.id==que.w_id }">
 		<div class="d-flex justify-content-center bd-highlight mb-3 m-3">
 		  <div class="p-2 bd-highlight"><a href="" class="btn btn-warning"><b>Edit</b></a></div>
