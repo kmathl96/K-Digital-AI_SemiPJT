@@ -28,6 +28,11 @@ public class QuestionDAOImpl implements QuestionDAO {
 	}
 	
 	@Override
+	public List<Question> queryQuestions(String w_id) throws Exception {
+		return sqlSession.selectList("mapper.question.selectQuestionListByUserId", w_id);
+	}
+	
+	@Override
 	public int updateQuestionHits(int id) throws Exception {
 		return sqlSession.update("mapper.question.updateQuestionHits", id);
 	}

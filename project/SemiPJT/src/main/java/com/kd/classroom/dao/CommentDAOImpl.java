@@ -29,6 +29,11 @@ public class CommentDAOImpl implements CommentDAO {
 	}
 	
 	@Override
+	public List<Comment> queryComments(String w_id) throws Exception {
+		return sqlSession.selectList("mapper.comment.selectCommentListByUserId", w_id);
+	}
+	
+	@Override
 	public int findNewId() throws Exception {
 		try {
 			int max = sqlSession.selectOne("mapper.comment.selectMaxId");

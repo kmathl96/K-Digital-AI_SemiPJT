@@ -14,6 +14,12 @@
 		select * from classroom_question
 		]]>
 	</select>
+	<select id="selectQuestionListByUserId" resultType="com.kd.classroom.bean.Question" parameterType="String">
+		<![CDATA[
+		select * from classroom_question
+		where w_id=#{w_id}
+		]]>
+	</select>
 	<insert id="insertQuestion" parameterType="com.kd.classroom.bean.Question">
 		<![CDATA[
 		insert into classroom_question(id,w_id,title,content,img)

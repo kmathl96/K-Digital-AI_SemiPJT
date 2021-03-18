@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+							"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.scrap">
+	<select id="selectScrapListById" parameterType="String" resultType="com.kd.classroom.bean.Scrap">
+		<![CDATA[
+		select s.id as id, s.u_id as u_id, q.id as q_id
+		from classroom_question q join classroom_scrap s
+		on q.id=s.q_id
+		where s.u_id=#{id}
+		order by s.id
+		]]>
+	</select>
+	<insert id="insertScrap" parameterType="com.kd.classroom.bean.Scrap">
+		<selectKey keyProperty="id" resultType="int" order="BEFORE">
+			SELECT scrap_seq.nextval FROM dual
+		</selectKey>
+		<![CDATA[
+		insert into classroom_scrap(id,u_id,q_id)
+		values(scrap_seq.nextval,#{u_id},#{q_id})
+		]]>
+	</insert>
+	<select id="selectScrap" parameterType="com.kd.classroom.bean.Scrap" resultType="com.kd.classroom.bean.Scrap">
+		<![CDATA[
+		select *
+		from classroom_scrap
+		where u_id=#{u_id} and q_id=#{q_id}
+		]]>
+	</select>
+	<delete id="deleteScrap" parameterType="com.kd.classroom.bean.Scrap">
+		<![CDATA[
+		delete from classroom_scrap
+		where u_id=#{u_id} and q_id=#{q_id}
+		]]>
+	</delete>
+</mapper>
