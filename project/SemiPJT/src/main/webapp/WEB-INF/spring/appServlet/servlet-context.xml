@@ -27,14 +27,19 @@
 	<!--  spring-upload -->
 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver" />
 
-	<beans:bean id="homeController" class="com.kd.classroom.HomeController" p:questionDao-ref="questionDao" p:studentDao-ref="studentDao"/>
+	<beans:bean id="homeController" class="com.kd.classroom.HomeController" p:questionDao-ref="questionDao" p:userDao-ref="userDao"/>
 
-	<beans:bean id="studentDao" class="com.kd.classroom.dao.StudentDAOImpl" p:sqlSession-ref="sqlSession"/>
-	<beans:bean id="studentController" class="com.kd.classroom.StudentController" p:studentDao-ref="studentDao" p:questionDao-ref="questionDao"/>
-
+	<beans:bean id="userDao" class="com.kd.classroom.dao.UserDAOImpl" p:sqlSession-ref="sqlSession"/>
+	<beans:bean id="userController" class="com.kd.classroom.UserController" p:userDao-ref="userDao" p:questionDao-ref="questionDao" p:commentDao-ref="commentDao" p:scrapDao-ref="scrapDao"/>
+	
 	<beans:bean id="questionDao" class="com.kd.classroom.dao.QuestionDAOImpl" p:sqlSession-ref="sqlSession"/>
-	<beans:bean id="questionController" class="com.kd.classroom.QuestionController" p:questionDao-ref="questionDao" p:studentDao-ref="studentDao" p:commentDao-ref="commentDao"/>
+	<beans:bean id="questionController" class="com.kd.classroom.QuestionController" p:questionDao-ref="questionDao" p:userDao-ref="userDao" p:answerDao-ref="answerDao" p:commentDao-ref="commentDao" p:scrapDao-ref="scrapDao"/>
 	
 	<beans:bean id="commentDao" class="com.kd.classroom.dao.CommentDAOImpl" p:sqlSession-ref="sqlSession"/>
-	<beans:bean id="commentController" class="com.kd.classroom.CommentController" p:commentDao-ref="commentDao" p:questionDao-ref="questionDao" p:studentDao-ref="studentDao"/>
+	<beans:bean id="commentController" class="com.kd.classroom.CommentController" p:commentDao-ref="commentDao" p:questionDao-ref="questionDao" p:userDao-ref="userDao" p:answerDao-ref="answerDao"/>
+	
+	<beans:bean id="answerDao" class="com.kd.classroom.dao.AnswerDAOImpl" p:sqlSession-ref="sqlSession"/>
+	<beans:bean id="answerController" class="com.kd.classroom.AnswerController" p:userDao-ref="userDao" p:questionDao-ref="questionDao" p:commentDao-ref="commentDao" p:answerDao-ref="answerDao"/>
+
+	<beans:bean id="scrapDao" class="com.kd.classroom.dao.ScrapDAOImpl" p:sqlSession-ref="sqlSession"/>
 </beans:beans>

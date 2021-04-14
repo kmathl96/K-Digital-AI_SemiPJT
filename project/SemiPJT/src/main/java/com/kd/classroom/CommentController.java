@@ -82,11 +82,13 @@ public class CommentController {
 				modelAndView.addObject("comments", coms);
 				modelAndView.addObject("page","questionDetail");
 			} catch (Exception e2) {
+				System.out.println("헉");
 				e2.printStackTrace();
 				modelAndView.addObject("err","댓글 생성 오류");
 				modelAndView.addObject("page","err");
 			}
 		} catch (Exception e) {
+			System.out.println("띠용");
 			e.printStackTrace();
 			modelAndView.addObject("err","댓글 생성 오류");
 			modelAndView.addObject("page","err");

@@ -23,7 +23,13 @@
 	  	<c:forEach var="question" items="${questions }" varStatus="status">
 		    <tr>
 		      <th scope="row">${status.count} </th>
-		      <td><div class="position-relative p-0"><a href="./questionDetail/${question.id }" class="text-decoration-none text-reset stretched-link p-3">${question.title }</a></div></td>
+		      <td>
+		      	<div class="position-relative p-0">
+		      		<a href="./questionDetail/${question.id }" class="text-decoration-none text-reset stretched-link p-3">
+		      			${question.title } <c:if test="${question.hits >= 50 }"> <span class="badge rounded-pill bg-danger">HIT</span> </c:if>
+		      		</a>
+	      		</div>
+      		  </td>
 		      <td>${question.w_name }</td>
 		      <td>${question.created_at }</td>
 		      <td>${question.hits }</td>

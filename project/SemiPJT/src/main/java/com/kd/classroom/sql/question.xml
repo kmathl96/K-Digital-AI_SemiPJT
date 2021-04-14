@@ -12,6 +12,7 @@
 	<select id="selectAllQuestionList" resultType="com.kd.classroom.bean.Question">
 		<![CDATA[
 		select * from classroom_question
+		order by created_at desc
 		]]>
 	</select>
 	<select id="selectQuestionListByUserId" resultType="com.kd.classroom.bean.Question" parameterType="String">

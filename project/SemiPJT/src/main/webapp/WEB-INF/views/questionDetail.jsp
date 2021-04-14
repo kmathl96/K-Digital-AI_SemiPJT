@@ -11,8 +11,11 @@
 	<h1 class="text-center fw-bold m-3">
 		${que.title }
 	</h1>
-	<img src="/semipjt/resources/questionUpload/exampleImg.jpg" class="img-fluid" alt="image">
-	<p>${que.content }</p>
+	<c:if test="${!empty que.img }">
+		<img src="/semipjt/resources/questionUpload/${que.img }" class="img-fluid m-3" alt="image">
+	</c:if>
+	
+	<p class="m-3">${que.content }</p>
 	<div class="d-flex justify-content-center mb-2">
 		<div class="btn btn-outline-dark p-4 p-3 position-relative">
 			<i class="fas fa-thumbtack fa-2x pb-3"></i><br><a href="./${que.id}/scrapQuestion" class="stretched-link text-decoration-none text-reset">Scrap!</a>

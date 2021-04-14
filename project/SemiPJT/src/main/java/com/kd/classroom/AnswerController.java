@@ -62,8 +62,8 @@ public class AnswerController {
 			ans.setW_id(t_id);
 			ans.setQ_id(q_id);
 			ans.setW_name(teacher.getName());
-			ans.setContent(request.getParameter("content"));
-			ans.setImg("");
+			ans.setContent(request.getParameter("answerContent"));
+//			ans.setImg("defaultImg0.jpg");
 			try {
 				answerDao.insertAnswer(ans);
 				Question que = questionDao.queryQuestion(q_id);
@@ -82,11 +82,13 @@ public class AnswerController {
 				modelAndView.addObject("page","questionDetail");
 			} catch (Exception e2) {
 				e2.printStackTrace();
+				System.out.println("띠용");
 				modelAndView.addObject("err","답변 생성 오류");
 				modelAndView.addObject("page","err");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			System.out.println("띠용2");
 			modelAndView.addObject("err","답변 생성 오류");
 			modelAndView.addObject("page","err");
 		}

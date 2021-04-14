@@ -6,7 +6,7 @@
 		<![CDATA[
 		select * from classroom_answer
 		where
-		id=#{id}
+		q_id=#{id}
 		]]>
 	</select>
 	<select id="selectAllAnswerList" resultType="com.kd.classroom.bean.Answer">

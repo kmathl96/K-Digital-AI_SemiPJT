@@ -12,7 +12,7 @@
 <article class="p-5 m-3 bg-light border border-dark border-5">
 	<div class="p-5 mx-5">
 		<div>
-			<img src="resources/profileUpload/${request_user.profile_img }" class="img-fluid float-start me-3 rounded-circle" alt="image" id="mypage_profileImg">
+			<img src="resources/profileUpload/${request_user.profile_img }" class="img-fluid float-start me-3 rounded-circle border border-2" alt="image" id="mypage_profileImg">
 			<div class="d-flex flex-column bd-highlight mb-3">
 			  <div class="p-2 bd-highlight"><h3><b>${request_user.name }<c:if test="${request_user.account_type=='teacher' }">선생님</c:if></b></h3></div>
 			  <div class="p-2 bd-highlight text-secondary">${request_user.id }</div>

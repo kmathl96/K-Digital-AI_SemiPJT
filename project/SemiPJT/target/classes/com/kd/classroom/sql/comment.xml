@@ -15,6 +15,12 @@
 		where q_id=#{id}
 		]]>
 	</select>
+	<select id="selectCommentListByUserId" resultType="com.kd.classroom.bean.Comment" parameterType="String">
+		<![CDATA[
+		select * from classroom_comment
+		where w_id=#{w_id}
+		]]>
+	</select>
 	<insert id="insertComment" parameterType="com.kd.classroom.bean.Comment">
 		<![CDATA[
 		insert into classroom_comment(id,w_id,q_id,content)

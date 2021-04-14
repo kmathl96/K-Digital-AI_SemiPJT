@@ -121,10 +121,10 @@ public class QuestionController {
 			Answer ans = answerDao.queryAnswer(q_id);
 			if (ans!=null) {
 				ans.setW_name(userDao.queryUser(ans.getW_id()).getName());
+				modelAndView.addObject("ans", ans);
 			}
 			modelAndView.addObject("writer", writer);
 			modelAndView.addObject("request_user", request_user);
-			modelAndView.addObject("ans", ans);
 			modelAndView.addObject("que", que);
 			modelAndView.addObject("comments", coms);
 			modelAndView.addObject("page","questionDetail");

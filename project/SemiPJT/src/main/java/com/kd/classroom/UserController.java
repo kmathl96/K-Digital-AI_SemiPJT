@@ -199,7 +199,6 @@ public class UserController {
 	
 	@RequestMapping(value="/changeProfile", method=RequestMethod.POST)
 	public ModelAndView changeProfile(HttpServletRequest request, @RequestParam("uploadFile") MultipartFile file) throws IllegalStateException, IOException {
-		System.out.println("넘어오기 한다");
 		ModelAndView modelAndView = new ModelAndView();
 		String PROFILE_IMAGE_PATH = request.getSession().getServletContext().getRealPath("resource/profileUpload/");
 		HttpSession session = request.getSession();
